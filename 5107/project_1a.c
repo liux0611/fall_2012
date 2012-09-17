@@ -47,7 +47,7 @@ ColorType Trace_Ray(RayType ray, SphereType sphere, ColorType background)
     int hit = 0;
     
     a = 1.0;
-    b = 2*(ray.dir_x*(ray.x-sphere.x) + ray.dir_y*(ray.y-sphere.y) + ray.dir_z*(ray.z-sphere.z))
+    b = 2*(ray.dir_x*(ray.x-sphere.x) + ray.dir_y*(ray.y-sphere.y) + ray.dir_z*(ray.z-sphere.z));
 	c = (ray.x-sphere.x)*(ray.x-sphere.x) + (ray.y-sphere.y)*(ray.y-sphere.y) + (ray.z-sphere.z)*(ray.z-sphere.z) - sphere.r*sphere.r;
     dis = b*b - 4*a*c;
     
@@ -90,7 +90,7 @@ ColorType Trace_Ray(RayType ray, SphereType sphere, ColorType background)
         intersection.y = ray.y + ray.dir_y*t;
         intersection.z = ray.z + ray.dir_z*t;
         
-        return_color = Shade_Ray(Point intersection, ColorType sphere.m);
+        return_color = Shade_Ray(intersection, sphere.m);
     } else {
         return_color = background;
     }
@@ -120,9 +120,9 @@ int main(int argc, char* const argv[])
 	fscanf(inFile, "%s %f %f %f", junkchar, &eye.x, &eye.y, &eye.z);
 	fscanf(inFile, "%s %f %f %f", junkchar, &vdir.x, &vdir.y, &vdir.z);    
 	fscanf(inFile, "%s %f %f %f", junkchar, &up.x, &up.y, &up.z);
+    fscanf(inFile, "%s %f", junkchar, &view_dist);
 	fscanf(inFile, "%s %f", junkchar, &fov_h);
 	fscanf(inFile, "%s %f", junkchar, &aspect_ratio);
-	fscanf(inFile, "%s %f", junkchar, &view_dist);
 	fscanf(inFile, "%s %d", junkchar, &pixwidth);
 	fscanf(inFile, "%s %f %f %f", junkchar, &bkg.r, &bkg.g, &bkg.b);
 	fscanf(inFile, "%s %f %f %f", junkchar, &material.r, &material.g, &material.b);
@@ -255,25 +255,6 @@ int main(int argc, char* const argv[])
     }
     
     fclose(outFile);
-    /*
-     printf("%f %f %f\n", ul.x, ul.y, ul.z);
-     printf("%f %f %f\n", ur.x, ur.y, ur.z);	
-     printf("%f %f %f\n", ll.x, ll.y, ll.z);
-     printf("%f %f %f\n", lr.x, lr.y, lr.z);
-     */
-    
-    /*
-     printf("%f %f %f\n", eye.x, eye.y, eye.z);
-     printf("%f %f %f\n", vdir.x, vdir.y, vdir.z);
-     printf("%f %f %f\n", up.x, up.y, up.z);
-     printf("%f\n", fov_h);
-     printf("%f\n", aspect_ratio);
-     printf("%f\n", view_dist);
-     printf("%d\n", pixwidth);
-     printf("%d %d %d\n", bkg_r, bkg_g, bkg_b);
-     printf("%d %d %d\n", material_r, material_g, material_b);
-     printf("%f %f %f %f\n", sphere.x, sphere.y, sphere.z, sphere_r);
-     */
     
 	return 0;
 }
